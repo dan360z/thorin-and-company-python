@@ -3,6 +3,7 @@ import json
 from flask import Flask, render_template, request, flash
 
 app = Flask(__name__)
+app.secret_key = 'some_secret'
 
 
 @app.route('/')
@@ -36,6 +37,7 @@ def contact():
         text = request.form["name"] + "\n" + request.form["email"] + "\n" + request.form["phone"] + "\n" + request.form["message"] + "\n"
         f.writelines(text)
         f.close()
+        flash("Thanks {}, we have received your message!".format(request.form["name"]))
         
     return render_template("contact.html", page_title="Contact")
 
